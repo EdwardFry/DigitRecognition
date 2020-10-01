@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Digit Recognition</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+</head>
+<body>
+    <div class="app">
+        <h2>Digit Recognition App</h2>
+        <p>Draw a digit (0-9) in the square below, click submit!</p>
+        <canvas
+            class="canvas"
+            id="main-canvas"
+        ></canvas>
+        <button onClick="clearCanvas()">Clear Canvas</button>
+        <button onClick="handleSubmit()">Submit</button>
+        <p id="result-text">Result:</p>
+      </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        //window.addEventListener("load", () => {
+            const canvas = document.getElementById("main-canvas")
+            const context = canvas.getContext("2d")
+            canvas.style.border = '1px solid black'
+            canvas.width = 300
+            canvas.height = 300
+
+            let drawing = false
+
+            //start drawing
+            const startDrawing = (e) => {
+                drawing = true
+                draw(e)
+            }
+
+            //stop drawing
+            const stopDrawing = () => {
+                drawing = false
+                context.beginPath()
+            }
+
+            //handles drawing
+            const draw = (e) => {
+                if (!drawing) {
+                    return
+                }
+            context.lineWidth = 10
+            context.lineCap = "round"
+
+            context.lineTo(e.offsetX, e.offsetY)
+            context.stroke()
+            context.beginPath()
+            context.moveTo(e.offsetX, e.offsetY)
+            }
+
+            //clear canvas
+            const clearCanvas = () => {
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                stopDrawing()
+            }
+
+            //handle submit
+            const handleSubmit = () => {
+                var imageData = canvas.toDataURL().split(';base64,')[1]
+                postImage(imageData)
+                clearCanvas()
+            }
+
+            //post image
+            const postImage = (imageData) => {
+                console.log("POSTING")
+                axios.post('http://127.0.0.1:5000/guess', {
+                    img: imageData
+                }).then((response) => {
+                console.log(response);
+                document.getElementById("result-text").innerHTML = `Result: ${response.data}`
+            })
+            }
+
+            canvas.addEventListener("mousedown", startDrawing)
+            canvas.addEventListener("mouseup", stopDrawing)
+            canvas.addEventListener("mousemove", draw)
+        //})
+    </script>
+
+</body>
+</html>

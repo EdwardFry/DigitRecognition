@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+h2 {
+    font-size: 30px;
+}
+
+.app {
+    text-align: center;
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+}
+    
+.canvas {
+    background: white;
+}
+    
+button {
+    margin-top: 20px;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    font-size: 20px;
+    background: gray;
+    color: white;
+}
+    
+button:hover {
+    cursor: pointer;
+}
+    
+#result-text {
+    font-size: 30px;
+}
