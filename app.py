@@ -5,7 +5,6 @@ import numpy as np
 import base64
 from io import BytesIO
 from PIL import Image 
-import cv2
 
 
 app = Flask(__name__)
