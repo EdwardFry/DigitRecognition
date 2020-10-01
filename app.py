@@ -25,15 +25,11 @@ def default_route():
     base64_img = request.get_json()['img']
     img = Image.open(BytesIO(base64.b64decode(base64_img)))
     img = img.resize(size, Image.ANTIALIAS).convert('LA')
-    #img.save('image1.png', 'PNG')
+    
     image_array = np.asarray(img)   
     image_array = np.delete(image_array, 0,2)
     image_array = np.squeeze(image_array, axis=2)
     image_array = np.divide(image_array, 255)
-    
-    #for thing in image_array:
-        #print(thing)
-    #print(model.summary())
 
     prediction = model.predict(np.asarray([image_array]))
     print((np.argmax(prediction[0])))
