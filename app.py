@@ -25,7 +25,7 @@ def default_route():
     base64_img = request.get_json()['img']
     img = Image.open(BytesIO(base64.b64decode(base64_img)))
     img = img.resize(size, Image.ANTIALIAS).convert('LA')
-    
+
     image_array = np.asarray(img)   
     image_array = np.delete(image_array, 0,2)
     image_array = np.squeeze(image_array, axis=2)
@@ -40,5 +40,4 @@ def render_page():
     return render_template("app.html")
     
 if __name__ == '__main__':
-    app.debug=True
     app.run()
