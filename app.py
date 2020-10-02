@@ -13,11 +13,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 CORS(app)
 model = tf.keras.models.load_model('MNIST_model')
 
-def scale(image):
-    image = tf.cast(image, tf.float32)
-    image /= 255.
-    return image
-
 @app.route('/guess', methods=['POST'])
 def default_route():
     size = 28, 28
@@ -31,12 +26,21 @@ def default_route():
     image_array = np.divide(image_array, 255)
 
     prediction = model.predict(np.asarray([image_array]))
-    print((np.argmax(prediction[0])))
-    return str(np.argmax(prediction[0]))
+    rounded_predictions = np.round_(prediction[0], decimals=2)
+
+    return jsonify({
+        'guess': float(np.argmax(prediction[0])),
+        'prediction': rounded_predictions.tolist()
+        })
 
 @app.route('/', methods=['GET'])
 def render_page():
     return render_template("app.html")
+
+@app.after_request
+def add_header(response):
+    response.cache_control.max_age = 0
+    return response
     
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

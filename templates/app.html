@@ -6,16 +6,39 @@
 </head>
 <body>
     <div class="app">
-        <h2>Digit Recognition App</h2>
-        <p>Draw a digit (0-9) in the square below, click submit!</p>
-        <canvas
-            class="canvas"
-            id="main-canvas"
-        ></canvas>
-        <button onClick="clearCanvas()">Clear Canvas</button>
-        <button onClick="handleSubmit()">Submit</button>
-        <p id="result-text">Result:</p>
-      </div>
+        <div class="draw-container">
+            <h2>Digit Recognition App</h2>
+            <p>Draw a digit (0-9) in the square below, click submit!</p>
+            <canvas
+                class="canvas"
+                id="main-canvas"
+            ></canvas>
+            <button onClick="clearCanvas()">Clear Canvas</button>
+            <button onClick="handleSubmit()">Submit</button>
+            <p id="result-text">Result:</p>
+        </div>
+
+        <div class="barchart-container">
+            <div class="barchart-bars" id="digit-classification-barchart">
+            </div>
+            <div class="barchart-labels">
+                <p>0</p>
+                <p>1</p>
+                <p>2</p>
+                <p>3</p>
+                <p>4</p>
+                <p>5</p>
+                <p>6</p>
+                <p>7</p>
+                <p>8</p>
+                <p>9</p>
+            </div>
+        </div>
+        </div>
+
+        </div>
+
+    </div>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
@@ -71,10 +94,17 @@
             const postImage = (imageData) => {
                 console.log("POSTING")
                 axios.post('https://ed-digit-recognition.herokuapp.com/guess', {
+                    //https://ed-digit-recognition.herokuapp.com/guess
+                    //http://localhost:5000/guess
                     img: imageData
                 }).then((response) => {
                 console.log(response);
-                document.getElementById("result-text").innerHTML = `Result: ${response.data}`
+                document.getElementById("result-text").innerHTML = `Result: ${response.data.guess}`
+    
+                document.getElementById("digit-classification-barchart").innerHTML = response.data.prediction.map(percentage =>
+                    `<div class="barchart-bar" style="height: ${percentage*100}%"></div>`
+                ).join('')
+                
             })
             }
 
