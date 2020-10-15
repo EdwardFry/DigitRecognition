@@ -1,41 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Digit Recognition</title>
+    <title>Digit Classification</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
 </head>
 <body>
-    <div class="app">
+    <div>
+        <div class="top-bar">Digit Classification App</div>
+        <div class="app">
         <div class="draw-container">
-            <h2>Digit Recognition App</h2>
-            <p>Draw a digit (0-9) in the square below, click submit!</p>
+            <p>Draw a single digit (0-9) in the middle of the </br> square below, then click submit!</p>
             <canvas
                 class="canvas"
                 id="main-canvas"
             ></canvas>
-            <button onClick="clearCanvas()">Clear Canvas</button>
-            <button onClick="handleSubmit()">Submit</button>
-            <p id="result-text">Result:</p>
+            <div class="button-group">
+                <button class="submit-button" onClick="handleSubmit()">Submit</button>
+                <button onClick="clearCanvas()">Clear</button>
+            </div>
+            <p id="result-text">Result:   Probability: </p>
         </div>
 
-        <div class="barchart-container">
-            <div class="barchart-bars" id="digit-classification-barchart">
-            </div>
-            <div class="barchart-labels">
-                <p>0</p>
-                <p>1</p>
-                <p>2</p>
-                <p>3</p>
-                <p>4</p>
-                <p>5</p>
-                <p>6</p>
-                <p>7</p>
-                <p>8</p>
-                <p>9</p>
+        <div class="barchart">
+            <p>Probability of digit being in each class</p>
+            <div class="barchart-container">
+                <div class="barchart-bars" id="digit-classification-barchart">
+                </div>
+                <div class="barchart-labels">
+                    <p>0</p>
+                    <p>1</p>
+                    <p>2</p>
+                    <p>3</p>
+                    <p>4</p>
+                    <p>5</p>
+                    <p>6</p>
+                    <p>7</p>
+                    <p>8</p>
+                    <p>9</p>
+                </div>
             </div>
         </div>
         </div>
-
         </div>
 
     </div>
@@ -68,7 +73,7 @@
                 if (!drawing) {
                     return
                 }
-            context.lineWidth = 10
+            context.lineWidth = 25
             context.lineCap = "round"
 
             context.lineTo(e.offsetX, e.offsetY)
@@ -99,7 +104,7 @@
                     img: imageData
                 }).then((response) => {
                 console.log(response);
-                document.getElementById("result-text").innerHTML = `Result: ${response.data.guess}`
+                document.getElementById("result-text").innerHTML = `Result: ${response.data.guess}, Probability: ${Math.round(response.data.prediction[response.data.guess]*100)}%`
     
                 document.getElementById("digit-classification-barchart").innerHTML = response.data.prediction.map(percentage =>
                     `<div class="barchart-bar" style="height: ${percentage*100}%"></div>`

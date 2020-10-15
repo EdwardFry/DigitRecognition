@@ -1,34 +1,56 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 
-h2 {
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.top-bar {
     font-size: 30px;
+    width: 100%;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    background: lightgreen;
+    padding: 20px 0px;
 }
 
 .app {
-    font-size: 30px;
+    display: flex;
+    margin-top: 50px;
+    font-size: 25px;
     font-family: 'Roboto', sans-serif;
 }
 
 .draw-container {
     width: 800px;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
+}
+
+.draw-container p {
+    margin-top: 0;
 }
     
-.canvas {
-    background: white;
+#main-canvas {
+    margin-top: 20px;
+    background: url("https://images.unsplash.com/photo-1586075010923-2dd4570fb338?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80");
 }
-    
+
 button {
     margin-top: 20px;
-    display: flex;
-    margin-left: auto;
-    margin-right: auto;
-    border: none;
+    display: inline-block;
+    border: 2px solid black;
     font-size: 20px;
     background: gray;
     color: white;
+    padding: 10px;
+}
+
+.button-group {
+    margin-bottom: 20px;
+}
+
+.submit-button {
+    background: green;
 }
     
 button:hover {
@@ -36,7 +58,7 @@ button:hover {
 }
     
 #result-text {
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .barchart-container {
@@ -45,35 +67,35 @@ button:hover {
     background: white;
     height: 400px;
     width: 500px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .barchart-bars {
     display: flex;
     width: 100%;
     height: 90%;
+    justify-content: space-between;
 }
 
 .barchart-bar {
     margin-top:auto;
     background: green;
     width: 40px;
-    margin-left: 5px;
-    margin-right: 5px;
 }
 
 .barchart-labels {
+    display: flex;
     border-top: 1px solid black;
     width: 100%;
     height: 10%;
+    justify-content: space-between;
 }
 
 .barchart-labels p {
     width: 40px;
-    float: left;
-    padding: 0;
-    margin: 0;
-    padding-left: 5px;
-    padding-right: 5px;
+    text-align: center;
+}
+
+.barchart p {
+    text-align: center;
+    margin: 0
 }
